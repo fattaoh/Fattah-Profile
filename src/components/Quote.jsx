@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
-import city from '../assets/city.jpg'
 import heroBg from '../assets/hero-bg.jpg'
+import Gallery from './Gallery.jsx'
 
 export default function Quote() {
   const wrapRef = useRef(null)
@@ -19,11 +19,9 @@ export default function Quote() {
       // abu-abu -> gelap (tiba-tiba, kepicu pas p lewat 0.12)
       card.dataset.on = p >= 0.12 ? 'true' : 'false'
 
-      // quote & gambar muncul SESUAI scroll, lalu hilang SESUAI scroll
-      const fadeOut = 1 - ramp(p, 0.62, 0.78)
-      card.style.setProperty('--t', (ramp(p, 0.2, 0.38) * fadeOut).toFixed(3))  // quote
-      card.style.setProperty('--i', (ramp(p, 0.3, 0.48) * fadeOut).toFixed(3))  // gambar
-      card.style.setProperty('--card', (1 - ramp(p, 0.78, 0.9)).toFixed(3))     // layar gelap -> abu-abu
+      // quote & galeri muncul SESUAI scroll
+      card.style.setProperty('--t', ramp(p, 0.25, 0.5).toFixed(3))  // quote
+      card.style.setProperty('--i', ramp(p, 0.4, 0.65).toFixed(3))  // galeri
     }
     update()
     window.addEventListener('scroll', update, { passive: true })
@@ -43,9 +41,7 @@ export default function Quote() {
             <blockquote className="quote__text">
               “To live is to be known and <em>remembered</em> by others.”
             </blockquote>
-            <div className="quote__img">
-              <img src={city} alt="Black and white aerial view of a city at night" />
-            </div>
+            <Gallery />
           </div>
         </section>
       </div>

@@ -4,12 +4,13 @@ import heroBg from './assets/hero-bg.jpg'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
 import Mentoring from './components/Mentoring.jsx'
-import Quote from './components/Quote.jsx'
 import Skills from './components/Skills.jsx'
+import Quote from './components/Quote.jsx'
 
 export default function App() {
   const heroRef = useRef(null)
   const midRef = useRef(null)
+  const skillsRef = useRef(null)
 
   // Lenis smooth scroll + sembunyiin page yang udah ketutup penuh
   useEffect(() => {
@@ -22,11 +23,16 @@ export default function App() {
     frame = requestAnimationFrame(raf)
 
     const about = document.getElementById('about')
+    const skills = document.getElementById('skills')
     const quote = document.getElementById('quote')
-    const covered = (el) => el && el.getBoundingClientRect().top <= 0
+    const pinnedTop = (el) => parseFloat(el.style.top || '0')
+    const covered = (el, pin = 0) => el && el.getBoundingClientRect().top <= pin + 0.5
+    const hide = (ref, yes) => { if (ref.current) ref.current.style.visibility = yes ? 'hidden' : 'visible' }
+
     const update = () => {
-      if (heroRef.current) heroRef.current.style.visibility = covered(about) ? 'hidden' : 'visible'
-      if (midRef.current) midRef.current.style.visibility = covered(quote) ? 'hidden' : 'visible'
+      hide(heroRef, covered(about))                                            // Hero ketutup About
+      hide(midRef, skillsRef.current && covered(skills, pinnedTop(skillsRef.current))) // Mentoring ketutup Skills
+      hide(skillsRef, covered(quote))                                          // Skills ketutup Quote
     }
     lenis.on('scroll', update)
     update()
@@ -37,16 +43,18 @@ export default function App() {
     }
   }, [])
 
-  // Mentoring lebih tinggi dari layar: pin bagian BAWAHnya ke bawah layar,
-  // lalu page Quote naik menimpa.
+  // Page yang lebih tinggi dari layar: pin bagian BAWAHnya ke bawah layar,
+  // lalu page berikutnya naik menimpa.
   useEffect(() => {
-    const el = midRef.current
+    const els = [midRef.current, skillsRef.current]
     const setTop = () => {
-      el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`
+      els.forEach((el) => {
+        el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`
+      })
     }
     setTop()
     const ro = new ResizeObserver(setTop)
-    ro.observe(el)
+    els.forEach((el) => ro.observe(el))
     window.addEventListener('resize', setTop)
     return () => {
       ro.disconnect()
@@ -64,8 +72,10 @@ export default function App() {
       <div ref={midRef} className="stack-mid">
         <Mentoring />
       </div>
+      <div ref={skillsRef} className="stack-skills">
+        <Skills />
+      </div>
       <Quote />
-      <Skills />
     </main>
   )
 }
