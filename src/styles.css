@@ -477,3 +477,5 @@ ul { list-style: none; }
   .gallery__stage { height: 56vw; }
   .gallery__card { height: auto; width: 76%; aspect-ratio: 4 / 3; }
 }
+
+.gallery__warn { max-width: 46ch; text-align: center; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, 0.6); }

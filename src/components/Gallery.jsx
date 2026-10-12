@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import city from '../assets/city.jpg'
 
+
 // Semua foto di folder src/assets/gallery/ otomatis kepakai (urut sesuai nama file: 01, 02, 03, 04)
-const found = import.meta.glob('../assets/gallery/*.{jpg,jpeg,png,webp,avif}', { eager: true, import: 'default' })
+const found = import.meta.glob('../assets/gallery/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP,AVIF}', { eager: true, import: 'default' })
 const list = Object.keys(found).sort().map((k) => found[k])
 const images = list.length ? list : [city]
+
 
 const mod = (a, n) => ((a % n) + n) % n
 
@@ -160,6 +162,12 @@ export default function Gallery() {
           </figure>
         ))}
       </div>
+
+            {import.meta.env.DEV && n < 2 && (
+        <p className="gallery__warn">
+          Cuma {n} foto kebaca. Taruh 4 foto di folder src/assets/gallery/ (01.jpg, 02.jpg, 03.jpg, 04.jpg) lalu restart npm run dev.
+        </p>
+      )}
 
       {n > 1 && (
         <div className="gallery__ctrl">
