@@ -3,9 +3,12 @@ import { FiInstagram, FiYoutube, FiLinkedin, FiGithub, FiArrowUpRight } from 're
 import { SiJavascript, SiLaravel, SiPhp, SiDart, SiFlutter } from 'react-icons/si'
 import heroBg from '../assets/hero-bg.jpg'
 
-// Foto: taruh file src/assets/footer.jpg (boleh .png/.webp) -> otomatis kepakai
-const found = import.meta.glob('../assets/footer.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP}', { eager: true, import: 'default' })
-const photo = Object.values(found)[0]
+// Foto: taruh di folder src/assets/footer/ (01.jpg, 02.jpg, ...) -> otomatis jadi tumpukan foto.
+// Kalau cuma 1 foto, boleh juga pakai file src/assets/footer.jpg
+const folder = import.meta.glob('../assets/footer/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP}', { eager: true, import: 'default' })
+const single = import.meta.glob('../assets/footer.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP}', { eager: true, import: 'default' })
+const fromFolder = Object.keys(folder).sort().map((k) => folder[k])
+const photos = fromFolder.length ? fromFolder : Object.values(single)
 
 // TODO: ganti link sosmed lo
 const socials = [
@@ -32,6 +35,22 @@ export default function Footer() {
   const drag = useRef({ moved: false })
   const [active, setActive] = useState(0)
   const [dragging, setDragging] = useState(false)
+
+    const [front, setFront] = useState(0)
+  const [leaving, setLeaving] = useState(false)
+  const timer = useRef(0)
+  const n = photos.length
+
+  // dipencet: foto depan lepas, foto berikutnya maju
+  const nextPhoto = () => {
+    if (n < 2 || leaving) return
+    setLeaving(true)
+    timer.current = window.setTimeout(() => {
+      setFront((f) => (f + 1) % n)
+      setLeaving(false)
+    }, 380)
+  }
+  useEffect(() => () => window.clearTimeout(timer.current), [])
 
   // chip yang paling dekat ke tengah -> active
   useEffect(() => {
@@ -101,12 +120,25 @@ export default function Footer() {
 
         <div className="footer__grid">
           <figure className="footer__photo">
-            {photo ? (
-              <img src={photo} alt="Muhammad Fattah Al Hamdani" draggable={false} />
+                        {n > 0 ? (
+              <button type="button" className="pstack" onClick={nextPhoto} disabled={n < 2} aria-label="Ganti foto">
+                {photos.map((src, i) => {
+                  const d = (i - front + n) % n
+                  return (
+                    <span
+                      key={src}
+                      className={`pcard pcard--d${Math.min(d, 3)}${d === 0 && leaving ? ' is-leaving' : ''}`}
+                    >
+                      <img src={src} alt={d === 0 ? 'Muhammad Fattah Al Hamdani' : ''} draggable={false} />
+                    </span>
+                  )
+                })}
+              </button>
             ) : (
               <div className="footer__ph" aria-hidden="true">MF</div>
             )}
             <div className="footer__socials">
+                
               {socials.map(({ name, href, Icon }) => (
                 <a key={name} href={href} target="_blank" rel="noreferrer" aria-label={name} title={name}>
                   <Icon aria-hidden="true" />
