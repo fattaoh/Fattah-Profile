@@ -86,10 +86,26 @@ export default function Gallery() {
       s.current.wheelAt = now
       go(e.deltaX > 0 ? 1 : -1)
     }
-    stage.addEventListener('wheel', onWheel, { passive: false })
+        stage.addEventListener('wheel', onWheel, { passive: false })
+
+    // tombol panah keyboard (← →) jalan selama galeri lagi kelihatan di layar
+    const onKey = (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
+      const t = e.target
+      if (/INPUT|TEXTAREA|SELECT/.test(t.tagName) || t.isContentEditable) return
+      const r = stage.getBoundingClientRect()
+      const onScreen = r.top < window.innerHeight * 0.8 && r.bottom > window.innerHeight * 0.2
+      const shown = Number(getComputedStyle(stage.parentElement).opacity) > 0.3
+      if (!onScreen || !shown) return
+      e.preventDefault()
+      go(e.key === 'ArrowRight' ? 1 : -1)
+    }
+    window.addEventListener('keydown', onKey)
+
     return () => {
       ro.disconnect()
       stage.removeEventListener('wheel', onWheel)
+      window.removeEventListener('keydown', onKey)
       cancelAnimationFrame(s.current.raf)
     }
     // eslint-disable-next-line

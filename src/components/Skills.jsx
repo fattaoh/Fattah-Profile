@@ -40,24 +40,32 @@ export default function Skills() {
     }
   }, [])
 
-  // drag pakai mouse (touchscreen udah bisa digeser native)
+    // drag pakai mouse (touchscreen udah bisa digeser native)
   const onPointerDown = (e) => {
-    if (e.pointerType !== 'mouse') return
+    if (e.pointerType !== 'mouse' || e.button !== 0) return
     const t = trackRef.current
-    drag.current = { down: true, moved: false, startX: e.clientX, startScroll: t.scrollLeft }
-    setDragging(true)
-    t.setPointerCapture(e.pointerId)
-  }
-  const onPointerMove = (e) => {
     const d = drag.current
-    if (!d.down) return
-    const dx = e.clientX - d.startX
-    if (Math.abs(dx) > 4) d.moved = true
-    trackRef.current.scrollLeft = d.startScroll - dx
-  }
-  const endDrag = () => {
-    drag.current.down = false
-    setDragging(false)
+    d.down = true
+    d.moved = false
+    d.startX = e.clientX
+    d.startScroll = t.scrollLeft
+    setDragging(true)
+
+    const move = (ev) => {
+      const dx = ev.clientX - d.startX
+      if (Math.abs(dx) > 4) d.moved = true
+      t.scrollLeft = d.startScroll - dx
+    }
+    const up = () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+      window.removeEventListener('pointercancel', up)
+      d.down = false
+      setDragging(false)
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+    window.addEventListener('pointercancel', up)
   }
 
   // geser track sampai skill ke-i ada di tengah (cuma geser horizontal, halaman nggak ikut turun)
@@ -85,9 +93,6 @@ export default function Skills() {
           ref={trackRef}
           className={`skills__track${dragging ? ' is-dragging' : ''}`}
           onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={endDrag}
-          onPointerCancel={endDrag}
         >
           {skills.map(({ name, type, Icon, color }, i) => (
             <button
