@@ -521,3 +521,37 @@ ul { list-style: none; }
 @media (max-width: 760px) {
   .projects .skills__track { --card-w: 74vw; }
 }
+
+/* ---------- Mentoring: versi putih ---------- */
+.exp { background: var(--paper); color: var(--ink); }
+.exp__list { border-top-color: var(--ink); }
+.exp__row { border-bottom-color: var(--line); }
+.exp__period { color: #444; }
+.exp__dot { background: var(--ink); }
+.exp__text { color: #666; }
+.exp__chip { border-color: var(--ink); }
+
+/* ---------- Mentoring naik nimpa About (kayak page lain) ---------- */
+.stack-about { position: sticky; top: 0; z-index: 2; }
+.stack-mid { z-index: 3; margin-top: calc(-2 * var(--gap)); }
+.stack-mid .exp-wrap { padding-top: var(--gap); }
+
+/* ---------- Skills: background abu-abu gelap (kayak Mentoring dulu) ---------- */
+#skills .skills {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.35)),
+    url('./assets/hero-bg.jpg') center / cover no-repeat,
+    #111;
+  color: #fff;
+}
+#skills .skills__count,
+#skills .skills__hint { color: rgba(255, 255, 255, 0.6); }
+
+#skills .skill { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.45); }
+#skills .skill.is-active { background: #f6f6f6; color: var(--brand); }
+#skills .skill.is-active .skill__name { color: var(--ink); }
+#skills .skill__type { color: rgba(0, 0, 0, 0.55); }
+
+#skills .skills__dot { background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.55); }
+#skills .skills__dot:hover { color: var(--brand); }
+#skills .skills__dot.is-active { background: #f6f6f6; color: var(--brand); }

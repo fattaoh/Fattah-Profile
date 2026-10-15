@@ -10,6 +10,7 @@ import Quote from './components/Quote.jsx'
 
 export default function App() {
   const heroRef = useRef(null)
+  const aboutRef = useRef(null)
   const midRef = useRef(null)
   const skillsRef = useRef(null)
   const projectsRef = useRef(null)
@@ -25,6 +26,7 @@ export default function App() {
     frame = requestAnimationFrame(raf)
 
     const about = document.getElementById('about')
+    const mentoring = document.getElementById('mentoring')
     const skills = document.getElementById('skills')
     const projects = document.getElementById('projects')
     const quote = document.getElementById('quote')
@@ -34,6 +36,7 @@ export default function App() {
 
     const update = () => {
       hide(heroRef, covered(about))                                                              // Hero ketutup About
+      hide(aboutRef, covered(mentoring))                                                         // About ketutup Mentoring
       hide(midRef, skillsRef.current && covered(skills, pinnedTop(skillsRef.current)))           // Mentoring ketutup Skills
       hide(skillsRef, projectsRef.current && covered(projects, pinnedTop(projectsRef.current)))  // Skills ketutup Projects
       hide(projectsRef, covered(quote))                                                          // Projects ketutup Quote
@@ -50,7 +53,7 @@ export default function App() {
   // Page yang lebih tinggi dari layar: pin bagian BAWAHnya ke bawah layar,
   // lalu page berikutnya naik menimpa.
   useEffect(() => {
-    const els = [midRef.current, skillsRef.current, projectsRef.current]
+    const els = [aboutRef.current, midRef.current, skillsRef.current, projectsRef.current]
     const setTop = () => {
       els.forEach((el) => {
         el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`
@@ -72,7 +75,9 @@ export default function App() {
       <div ref={heroRef} className="stack-under">
         <Hero />
       </div>
-      <About />
+      <div ref={aboutRef} className="stack-about">
+        <About />
+      </div>
       <div ref={midRef} className="stack-mid">
         <Mentoring />
       </div>
