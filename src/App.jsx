@@ -7,6 +7,7 @@ import Mentoring from './components/Mentoring.jsx'
 import Skills from './components/Skills.jsx'
 import Projects from './components/Projects.jsx'
 import Quote from './components/Quote.jsx'
+import Footer from './components/Footer.jsx'
 
 export default function App() {
   const heroRef = useRef(null)
@@ -88,6 +89,8 @@ export default function App() {
         <Projects />
       </div>
       <Quote />
+      
+      <Footer />
     </main>
   )
 }

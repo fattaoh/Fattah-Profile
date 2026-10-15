@@ -20,8 +20,8 @@ export default function Quote() {
       card.dataset.on = p >= 0.12 ? 'true' : 'false'
 
       // quote & galeri muncul SESUAI scroll
-      card.style.setProperty('--t', ramp(p, 0.25, 0.5).toFixed(3))  // quote
-      card.style.setProperty('--i', ramp(p, 0.4, 0.65).toFixed(3))  // galeri
+            card.style.setProperty('--t', ramp(p, 0.2, 0.4).toFixed(3))  // quote
+      card.style.setProperty('--i', ramp(p, 0.3, 0.5).toFixed(3))  // galeri
     }
     update()
     window.addEventListener('scroll', update, { passive: true })
