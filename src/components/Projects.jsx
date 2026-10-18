@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 // TODO: ganti dengan project asli lo (name, tag, desc, github)
 const projects = [
-  { name: 'Project One', tag: 'Web App · Laravel', desc: 'Aplikasi yang digunakan untuk melihat profile beberapa karakter Tekken', github: 'https://github.com/fattaoh/tekken_character_project.git' },
-  { name: 'Project Two', tag: 'Mobile App · Flutter', desc: 'Website yang berisi buku-buku yg bisa dipinjam (Prototype)', github: 'https://github.com/fattaoh/E_Library.git' },
+  { name: 'Project One', tag: 'Web App · Laravel', desc: 'Aplikasi yang digunakan untuk melihat profile beberapa karakter Tekken', github: '' },
+  { name: 'Project Two', tag: 'Mobile App · Flutter', desc: 'Website yang berisi buku-buku yg bisa dipinjam (Prototype)', github: 'https://github.com/fattaoh/tekken_character_project.git' },
   { name: 'Project Three', tag: 'Website · JavaScript', desc: 'Ganti dengan deskripsi project ini: apa itu, buat siapa, dan masalah apa yang dipecahkan.', github: 'https://github.com/fattaoh/skl3Payroll.git' },
   { name: 'Project Four', tag: 'Web App · PHP', desc: 'Ganti dengan deskripsi project ini: apa itu, buat siapa, dan masalah apa yang dipecahkan.', github: 'https://github.com/fattaoh/E-Commerce.git' },
 ]

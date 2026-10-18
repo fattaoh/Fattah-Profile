@@ -12,14 +12,14 @@ const photos = fromFolder.length ? fromFolder : Object.values(single)
 
 // TODO: ganti link sosmed lo
 const socials = [
-  { name: 'Instagram', href: 'https://instagram.com/', Icon: FiInstagram },
+  { name: 'Instagram', href: 'https://instagram.com/lowcortisoll_', Icon: FiInstagram },
   { name: 'YouTube', href: 'https://youtube.com/', Icon: FiYoutube },
   { name: 'LinkedIn', href: 'https://linkedin.com/', Icon: FiLinkedin },
-  { name: 'GitHub', href: 'https://github.com/', Icon: FiGithub },
+  { name: 'GitHub', href: 'https://github.com/fattaoh', Icon: FiGithub },
 ]
 
 // TODO: ganti link di pill bawah
-const pill = { label: 'www.instagram.com/username', href: 'https://instagram.com/' }
+const pill = { label: 'www.instagram.com/lowcortisoll_', href: 'https://instagram.com/lowcortisoll_' }
 
 // sama dengan daftar di page Skills (icon doang)
 const skills = [
