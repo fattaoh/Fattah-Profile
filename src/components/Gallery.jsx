@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import city from '../assets/city.jpg'
+import city from '../assets/city.JPG'
 
 
 // Semua foto di folder src/assets/gallery/ otomatis kepakai (urut sesuai nama file: 01, 02, 03, 04)
